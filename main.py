@@ -44,19 +44,20 @@ def get_birthdays_per_week(list):
         }
 
     for day, date in dates_to_check.items():
-        # if day in ['Saturday', 'Sunday']:
-        #     continue
         birthdays_per_week[day] = []
 
         for user in birthdays_this_month:
-# посмотреть завтра
+
             if datetime.datetime.strptime(user['birthday'], "%Y-%m-%d").day == int(date):
                 if datetime.datetime.strptime(user['birthday'], "%Y-%m-%d").weekday() == 5:
                     birthdays_per_week['Monday'].append(user['name'])
                 else:
                     birthdays_per_week[day].append(user['name'])
+    birthdays_per_week['Monday'] += birthdays_per_week['Saturday'] + birthdays_per_week['Sunday']
 
     for i in birthdays_per_week:
+        if i in ['Saturday', 'Sunday']:
+            continue
         print(f'{i}: {", ".join(birthdays_per_week[i])}')
 
 
